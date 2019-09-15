@@ -1,84 +1,37 @@
-const client = require( './lib/client.class' )
-const exec = require( 'child_process' ).exec
-const _ = require( 'lodash' )
+const Stack = require('../../src/stack')
 
-function isArraysEqual( x, y ) {
-    return _( x ).xorWith( y, _.isEqual ).isEmpty()
-}
+describe('Exercise 1', () => {
+    it('Should create a push method which adds a new element to the top of the stack', function () {
+        const stack = new Stack()
+        stack.push(1)
 
-var server
-beforeAll( async done => {
-    server = exec( 'node server', { async: true } ).pid
-    done()
-} )
+        const expectedStack = [1]
 
-// Should we check all?
-describe( 'Exercise 2', () => {
-    it( 'Should return 1200', async done => {
-        const results = await client.checkItem( 'couch' )
-        const checkPrice = await client.checkPrice( 'couch' )
+        expect(stack.length, `when pushing 1 to the stack, the length of the stack should be 1`).toBe(1)
+        expect(stack.stack, `when pushing 1 to the stack, the stack should look like this - [1]`).toEqual(expectedStack)
+    })
 
-        expect( checkPrice.price ).toBe( results.price )
-        done()
-    } )
+    it('Should create a peek method which returns the top element of the stack', function () {
+        const stack = new Stack()
 
-    it( 'Should return null', async done => {
-        const checkPrice = await client.checkPrice( 'undefined-item' )
-
-        expect( checkPrice.price ).toBeNull()
-
-        done()
-    } )
-} )
-
-describe( 'Exercise 4', () => {
-    it( 'Should return 15', async done => {
-        const itemName = 'chair'
-        const chair = await client.checkItem( itemName )
-        const quantity = chair.inventory
-
-        const response = await client.buyItem( itemName )
-        expect( response.inventory ).toBe( quantity - 1 )
-
-        done()
-    } )
-
-    it( 'Should return 0', async done => {
-        const itemName = 'couch'
-        const chair = await client.checkItem( itemName )
-        const quantity = chair.inventory
-
-        const response = await client.buyItem( itemName )
-        expect( response.inventory ).toBe( quantity - 1 )
-
-        done()
-    } )
-} )
-
-describe( 'Exercise 6', () => {
-    it( 'Should be the same store of calling with false admin param', async ( done ) => {
-        const originalStore = await client.fetchStore()
-        let store = await client.sale( false )
-
-        expect( isArraysEqual( store, originalStore ) ).toBeTruthy()
-        done()
-    } )
-
-    it( 'Should change the prices in the store when sending admin param to be true', async ( done ) => {
-        const originalStore = await client.fetchStore()
-        let store = await client.sale( true )
-
-        // Make the logic of reducing the prices
-        for ( let i = 0; i < originalStore.length; i++ ) {
-            if ( originalStore[ i ].inventory > 10 ) {
-                originalStore[ i ].price = originalStore[ i ].price / 2
-            }
+        for (let i = 1; i <= 3; i++) {
+            stack.push(i)
+            expect(stack.peek(), `when pushing ${i} to the stack, the top element should be ${i}`).toBe(i)
         }
-        expect( isArraysEqual( store, originalStore ) ).toBeTruthy()
-        done()
-    } )
-} )
+    })
 
-afterAll( done => {
-    done()
-} )
+    it('Should create a pop method which removes the top element of the stack (and returns it)', function () {
+        const stack = new Stack()
+
+        stack.push(1)
+        stack.push(2)
+        stack.push(3)
+
+        for (let i = 3; i > 1; i--) {
+            expect(stack.length, `when pushing 1,2,3 to the stack, the length of the stack should be ${i}`).toBe(i)
+
+            stack.pop()
+            expect(stack.peek(), `when pushing 1,2,3 to the stack and popping, the popped element should be ${i - 1}`).toBe(i - 1)
+        }
+    })
+})
