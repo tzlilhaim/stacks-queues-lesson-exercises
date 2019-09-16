@@ -1,55 +1,56 @@
-const Stack = require('../../src/stack')
+const Queue = require('../../src/queue')
 
 describe('Exercise 1', () => {
-    it('Should create a `push` method which adds a new element to the top of the stack', function () {
-        const stack = new Stack()
-        stack.push(1)
+    it('Should create an `enqueue` method which adds a new element to the end of the queue', function () {
+        const queue = new Queue()
+        queue.enqueue(1)
 
-        const expectedStack = [1]
+        const expectedQueue = [1]
 
-        expect(stack.length, `when pushing 1 to the stack, the length of the stack should be 1`).toBe(1)
-        expect(stack.stack, `when pushing 1 to the stack, the stack should look like this - [1]`).toEqual(expectedStack)
+        expect(queue.length, `when enqueueing 1 to the queue, the length of the queue should be 1`).toBe(1)
+        expect(queue.queue, `when pushing 1 to the queue, the queue should look like this - [1]`).toEqual(expectedQueue)
     })
 
-    it('Should create a `peek` method which returns the top element of the stack', function () {
-        const stack = new Stack()
+    it('Should create a `peek` method which returns the front element of the queue', function () {
+        const queue = new Queue()
 
         for (let i = 1; i <= 3; i++) {
-            stack.push(i)
-            expect(stack.peek(), `when pushing ${i} to the stack, the top element should be ${i}`).toBe(i)
+            queue.enqueue(i)
         }
+
+        expect(queue.peek(), `when enqueueing 1,2,3 to the queue, the front element of the queue should be 1`).toBe(1)
     })
 
-    it('Should create a `pop` method which removes the top element of the stack (and returns it)', function () {
-        const stack = new Stack()
-        expect(stack.peek(), `when running the 'peek' method on an empty stack the method should return 'null'`).toBe(null)
+    it('Should create a `dequeue` method which removes the front element of the queue', function () {
+        const queue = new Queue()
+        expect(queue.peek(), `when running the 'peek' method on an empty queue the method should return 'null'`).toBe(null)
 
-        stack.push(1)
-        stack.push(2)
-        stack.push(3)
+        queue.push(1)
+        queue.push(2)
+        queue.push(3)
 
         for (let i = 3; i > 1; i--) {
-            expect(stack.length, `when pushing 1,2,3 to the stack, the length of the stack should be ${i}`).toBe(i)
+            expect(queue.length, `when pushing 1,2,3 to the queue, the length of the queue should be ${i}`).toBe(i)
 
-            stack.pop()
-            expect(stack.peek(), `when pushing 1,2,3 to the stack and popping, the popped element should be ${i - 1}`).toBe(i - 1)
+            queue.dequeue()
+            expect(queue.peek(), `when pushing 1,2,3 to the queue and dequeueing, the front element should be ${i - 1}`).toBe(i - 1)
         }
     })
 
-    it('Should create an `isEmpty` method which returns `true` if teh stack is empty and `false` otherwise', function () {
-        const stack = new Stack()
-        expect(stack.isEmpty(), `when instanciating a new stack, the 'isEmpty' method should return 'true'`).toBe(true)
+    it('Should create an `isEmpty` method which returns `true` if the queue is empty and `false` otherwise', function () {
+        const queue = new Queue()
+        expect(queue.isEmpty(), `when instanciating a new queue, the 'isEmpty' method should return 'true'`).toBe(true)
 
         for (let i = 1; i <= 3; i++) {
-            stack.push(i)
+            queue.enqueue(i)
         }
 
-        expect(stack.isEmpty(), `when instanciating a new stack and pushing some values, the 'isEmpty' method should return false`).toBe(false)
+        expect(queue.isEmpty(), `when instanciating a new queue and enqueueing some values, the 'isEmpty' method should return false`).toBe(false)
 
         for (let i = 1; i <= 3; i++) {
-            stack.pop(i)
+            queue.dequeue()
         }
 
-        expect(stack.isEmpty(), `when instanciating a new stack, the 'isEmpty' method should return 'true'`).toBe(true)
+        expect(queue.isEmpty(), `when instanciating a new queue, enqueueing some values and then dequeueing them, the 'isEmpty' method should return 'true'`).toBe(true)
     })
 })
