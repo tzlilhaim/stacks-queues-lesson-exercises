@@ -1,6 +1,6 @@
 const Queue = require('../../src/queue')
 
-describe('Exercise 1', () => {
+describe('Exercise 2', () => {
     it('Should create an `enqueue` method which adds a new element to the end of the queue', function () {
         const queue = new Queue()
         queue.enqueue(1)
