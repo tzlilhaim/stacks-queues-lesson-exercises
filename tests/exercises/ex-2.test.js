@@ -1,59 +1,28 @@
-const Queue = require('../../src/queue')
+const MinStack = require('../../src/MinStack')
 
 describe('Exercise 2', () => {
-    it('Should create an `enqueue` method which adds a new element to the end of the queue', function () {
-        const queue = new Queue()
-        queue.enqueue(1)
+    it('Should create a `getMin` method which returns the minimum value in the stack', function () {
+        const ms = new MinStack()
 
-        const expectedQueue = [1]
+        ms.push(17)
+        ms.push(12)
+        ms.push(31)
+        expect(ms.getMin(), `when pushing 17,12,31 to the stack, the 'getMin' function should return 12 but got ${ms.getMin()}`).toBe(12)
 
-        expect(queue.length, `when enqueueing 1 to the queue, the length of the queue should be 1`).toBe(1)
-        expect(queue.queue, `when pushing 1 to the queue, the queue should look like this - [1]`).toEqual(expectedQueue)
-    })
+        ms.pop()
+        ms.pop()
+        ms.pop()
+        expect(ms.getMin(), `when pushing 17,12,31 to the stack and then popping all values, the 'getMin' function should return 'null' but got ${ms.getMin()}`).toBe(null)
 
-    it('Should create a `peek` method which returns the front element of the queue', function () {
-        const queue = new Queue()
+        ms.push(19)
+        ms.push(21)
+        expect(ms.getMin(), `when pushing 19,21 to the stack, the 'getMin' function should return 19 but got ${ms.getMin()}`).toBe(19)
 
-        for (let i = 1; i <= 3; i++) {
-            queue.enqueue(i)
-        }
+        ms.push(3)
+        expect(ms.getMin(), `when pushing 19,21,3 to the stack, the 'getMin' function should return 3 but got ${ms.getMin()}`).toBe(3)
 
-        expect(queue.peek(), `when enqueueing 1,2,3 to the queue, the front element of the queue should be 1`).toBe(1)
-    })
-
-    it('Should create a `dequeue` method which removes the front element of the queue', function () {
-        const queue = new Queue()
-        expect(queue.peek(), `when running the 'peek' method on an empty queue the method should return 'null'`).toBe(null)
-
-        queue.enqueue(1)
-        queue.enqueue(2)
-        queue.enqueue(3)
-
-        let expectedLength = 3
-
-        for (let i = 1; i < 3; i++) {
-            expect(queue.length, `when enqueueing 1,2,3 to the queue, the length of the queue should be ${expectedLength} but got ${queue.length}`).toBe(expectedLength)
-            expectedLength--
-
-            queue.dequeue()
-            expect(queue.peek(), `when enqueueing 1,2,3 to the queue and dequeueing, the front element should be ${i + 1}`).toBe(i + 1)
-        }
-    })
-
-    it('Should create an `isEmpty` method which returns `true` if the queue is empty and `false` otherwise', function () {
-        const queue = new Queue()
-        expect(queue.isEmpty(), `when instanciating a new queue, the 'isEmpty' method should return 'true'`).toBe(true)
-
-        for (let i = 1; i <= 3; i++) {
-            queue.enqueue(i)
-        }
-
-        expect(queue.isEmpty(), `when instanciating a new queue and enqueueing some values, the 'isEmpty' method should return false`).toBe(false)
-
-        for (let i = 1; i <= 3; i++) {
-            queue.dequeue()
-        }
-
-        expect(queue.isEmpty(), `when instanciating a new queue, enqueueing some values and then dequeueing them, the 'isEmpty' method should return 'true'`).toBe(true)
+        ms.pop()
+        ms.pop()
+        expect(ms.getMin(), `when pushing 19,21,3 to the stack and then popping 2 values, the 'getMin' function should return 19 but got ${ms.getMin()}`).toBe(19)
     })
 })
