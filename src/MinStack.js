@@ -2,11 +2,13 @@ const Stack = require('./Stack')
 
 class MinStack extends Stack {
   constructor() {
+    //Write your code here
     super()
     this.minValues = new Stack()
   }
 
   push(x) {
+    //Write your code here
     if (this.isEmpty()) {
       this.minValues.push(x)
     } else {
@@ -17,6 +19,7 @@ class MinStack extends Stack {
   }
 
   pop() {
+    //Write your code here
     if (this.isEmpty()) {
       return null
     } else {
@@ -27,6 +30,7 @@ class MinStack extends Stack {
   }
 
   getMin() {
+    //Write your code here
     return this.minValues.peek() ? this.minValues.peek() : null
   }
 }
