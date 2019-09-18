@@ -12,7 +12,7 @@ describe('Exercise 3', () => {
     dq.dequeue(1)
     dq.dequeue(1)
 
-    expect(JSON.stringify(dq.getLongestQueue()), '').toContain('[2,2]')
+    expect(JSON.stringify(dq.getLongestQueue()), 'enqueueing multiple ').toContain('[2,2]')
     expect(JSON.stringify(dq.getShortestQueue()), '').toContain('[1]')
 
 
@@ -27,6 +27,7 @@ describe('Exercise 3', () => {
     expect(JSON.stringify(dq.getShortestQueue()), '').toContain('[2,2]')
 
     dq.balanceQueues()
+
     expect(JSON.stringify(dq.getLongestQueue()), '').toContain('[1,1,1,1,1]')
     expect(JSON.stringify(dq.getShortestQueue()), '').toContain('[2,2,1,1]')
   })
