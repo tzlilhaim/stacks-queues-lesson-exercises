@@ -42,8 +42,8 @@ describe('Exercise 2', () => {
     })
 
     it('The `getMin` method should be in O(1)', function () {
-        const smallStack = new Stack()
-        const bigStack = new Stack()
+        const smallStack = new MinStack()
+        const bigStack = new MinStack()
 
         pushMany(10000, smallStack)
         pushMany(10000000, bigStack)
